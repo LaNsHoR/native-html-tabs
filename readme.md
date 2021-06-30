@@ -43,13 +43,13 @@ Just add `html-tabs.js` to your document, that will define the new HTML tags.
 First, add the package to your project.
 
 ```bash
-npm install html-native-tabs --save
+npm install native-html-tabs --save
 ```
 
 Second and last, add the package to the files for which you will use it :)
 
 ```javascript
-require('html-native-tabs')
+require('native-html-tabs')
 ```
 
 ## Usage
