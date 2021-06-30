@@ -2,7 +2,7 @@
 
 A tabs components for plain HTML. 
 
-NO JS, libraries or frameworks required. It works in vanilla HTML and this doesn't have any dependencies. You can use it for your native project.
+NO JS, libraries, frameworks or transpilers required. It works in vanilla HTML and this doesn't have any dependencies. You can use it for your native project. 
 
 Just type:
 
