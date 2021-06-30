@@ -1,0 +1,142 @@
+<html>
+    <head>
+        <style>
+            body {
+                background: rgb(150, 163, 180)
+            }
+
+            tab-group {
+                margin-top: 10px;
+            }
+
+            .custom {
+                font-family: monospace;
+            }
+
+            .custom tab-content, .custom tab-title[active] {
+                background: black;
+                color: white;
+            }
+
+            .custom tab-title
+            {
+                color: #aaa;
+                background: #555;
+            }
+
+            .custom tab-title[disabled] {
+                color:rgb(29, 29, 29);
+                text-decoration: line-through;
+            }
+        </style>
+    </head>
+    <body>        
+        <script src="html-tabs.js"></script>
+        <h1>TEST</h1>
+
+        <tab-group>
+            <tab-title-list>
+                <tab-title>Hello 1</tab-title>
+                <tab-title>Hello 2</tab-title>
+                <tab-title>Hello 3</tab-title>
+                <tab-title disabled>Hello 4</tab-title>
+            </tab-title-list>
+            <tab-content-list>
+                <tab-content>World 1</tab-content>
+                <tab-content>World 2</tab-content>
+                <tab-content>World 3</tab-content>
+                <tab-content>World 4</tab-content>
+            </tab-content-list>
+        </tab-group>
+
+        <tab-group class="custom">
+            <tab-title-list>
+                <tab-title>Hello 1</tab-title>
+                <tab-title>Hello 2</tab-title>
+                <tab-title active>Hello 3</tab-title>
+                <tab-title disabled>Hello 4</tab-title>
+            </tab-title-list>
+            <tab-content-list>
+                <tab-content>World 1</tab-content>
+                <tab-content>World 2</tab-content>
+                <tab-content>World 3</tab-content>
+                <tab-content>World 4</tab-content>
+            </tab-content-list>
+        </tab-group>
+
+        <tab-group tabs-position='bottom'>
+            <tab-title-list>
+                <tab-title>Hello 1</tab-title>
+                <tab-title>Hello 2</tab-title>
+                <tab-title>Hello 3</tab-title>
+                <tab-title>Hello 4</tab-title>
+            </tab-title-list>
+            <tab-content-list>
+                <tab-content>World 1</tab-content>
+                <tab-content>World 2</tab-content>
+                <tab-content>World 3</tab-content>
+                <tab-content active>World 4</tab-content>
+            </tab-content-list>
+        </tab-group>
+
+        <tab-group tabs-position='left'>
+            <tab-title-list>
+                <tab-title disabled>Hello 1</tab-title>
+                <tab-title active>Hello 2</tab-title>
+                <tab-title>Hello 3</tab-title>
+                <tab-title>Hello 4</tab-title>
+            </tab-title-list>
+            <tab-content-list>
+                <tab-content>World 1</tab-content>
+                <tab-content>World 2</tab-content>
+                <tab-content>World 3</tab-content>
+                <tab-content>World 4</tab-content>
+            </tab-content-list>
+        </tab-group>
+
+        <tab-group tabs-position='right'>
+            <tab-title-list>
+                <tab-title active>Hello 1</tab-title>
+                <tab-title>Hello 2</tab-title>
+                <tab-title>Hello 3</tab-title>
+                <tab-title disabled>Hello 4</tab-title>
+            </tab-title-list>
+            <tab-content-list>
+                <tab-content>World 1</tab-content>
+                <tab-content>World 2</tab-content>
+                <tab-content active>World 3</tab-content>
+                <tab-content>World 4</tab-content>
+            </tab-content-list>
+        </tab-group>
+
+        <tab-group tabs-position='bottom'>
+            <tab-title-list>
+                <tab-title active>Hello 1</tab-title>
+                <tab-title disabled>Hello 2</tab-title>
+                <tab-title>Hello 3</tab-title>
+                <tab-title active>Hello 4</tab-title>
+            </tab-title-list>
+            <tab-content-list>
+                <tab-content>World 1</tab-content>
+                <tab-content active>World 2</tab-content>
+                <tab-content active>World 3</tab-content>
+                <tab-content>World 4</tab-content>
+            </tab-content-list>
+        </tab-group>
+
+        <tab-group tabs-position='bottom'>
+            <tab-content-list>
+                <tab-content>World 1</tab-content>
+                <tab-content active>World 2</tab-content>
+                <tab-content active>World 3</tab-content>
+                <tab-content>World 4</tab-content>
+            </tab-content-list>
+            <tab-title-list>
+                <tab-title active>Hello 1</tab-title>
+                <tab-title disabled>Hello 2</tab-title>
+                <tab-title>Hello 3</tab-title>
+                <tab-title active>Hello 4</tab-title>
+            </tab-title-list>
+        </tab-group>
+    </body>
+</html>
