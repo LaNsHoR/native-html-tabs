@@ -224,13 +224,17 @@ class TabGroup extends HTMLElement {
     }
 
     setPosition( position = null ) {
-        position = position || this.getAttribute('tabs-position')
+        const current_position = this.getAttribute('tabs-position')
+        position = position || current_position
         position = ['top', 'bottom', 'left', 'right'].indexOf(position) === -1 ? 'top' : position
         for( const title of this.querySelectorAll('tab-title') ) {
             title.setAttribute('position', position)
         }
 
         this.querySelector('tab-title-list')?.setAttribute('tabs-position', position)
+
+        if( current_position != position )
+            this.setAttribute('tabs-position', position)
     }
 
     setActive( index = null) {

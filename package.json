@@ -1,10 +1,11 @@
 {
   "name": "native-html-tabs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "HTML elements to build tab components. Made with vanilla HTML and JS, so no frameworks or libraries required.",
   "main": "html-tabs.js",
   "scripts": {
-    "start:dev": "webpack serve"
+    "start:dev": "webpack serve",
+    "test": "jest --collect-coverage"
   },
   "keywords": [
     "tabs",
@@ -17,6 +18,7 @@
   "author": "LaNsHoR <lanshor@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "jest": "^27.0.6",
     "webpack": "^5.2.0",
     "webpack-cli": "^4.1.0",
     "webpack-dev-server": "^3.11.0"

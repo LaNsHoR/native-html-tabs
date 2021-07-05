@@ -86,7 +86,7 @@ Defines a group of tabs which share the same content space, so only one of them 
 It can be styled as any other component and accept the standard HTML element attributes.
 
 #### Special Attributes:
-- tabs-position: accept de values `top`, `bottom`, `left`, `right`. The default is `top`. As any attribute, it's safe to change it programatically at any time.
+- tabs-position: accept the values `top`, `bottom`, `left`, `right`. The default is `top`. As any attribute, it's safe to change it programmatically at any time.
 
 #### Examples
 
@@ -124,7 +124,7 @@ It can be styled as any other component and accept the standard HTML element att
 - active: defines if the tab is active and selected, this attribute is set automatically when the user clicks on the tab title. Only one tab-title can be active at a time for a given tab-group.
 - disabled: makes the tab-title disabled, preventing the user to click on it.
 
-You have several options to set a tab as an active programtically, the common ones are:
+You have several options to set a tab as an active programmatically, the common ones are:
 
 ```javascript
 // Option 1 (javascript style): Using the click method on the HTML element itself
@@ -204,7 +204,7 @@ It can be styled as any other component and accept the standard HTML element att
 #### Special Attributes:
 - active: defines if the tab content is active (rendered), this attribute is set automatically when the user clicks on the tab title associated to this content. Only one tab-content can be active at a time for a given tab-group.
 
-You have several options to set a tab content as an active programtically, the common ones are:
+You have several options to set a tab content as an active programmatically, the common ones are:
 
 ```javascript
 // Option 1 (javascript style): Using the click method on the HTML element itself
