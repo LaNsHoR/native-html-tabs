@@ -1,6 +1,6 @@
 {
   "name": "native-html-tabs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "HTML elements to build tab components. Made with vanilla HTML and JS, so no frameworks or libraries required.",
   "main": "html-tabs.js",
   "scripts": {

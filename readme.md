@@ -1,8 +1,8 @@
 # html-tabs
 
-A tabs components for plain HTML. 
+A tab component for plain HTML.
 
-NO JS, libraries, frameworks or transpilers required. It works in vanilla HTML and this doesn't have any dependencies. You can use it for your native project. 
+NO libraries, frameworks or transpilers required. You don't even need JS to use it. It works in vanilla HTML and this doesn't have any dependencies. You can use it for your native project. 
 
 Just type:
 
@@ -75,7 +75,7 @@ They should be used following the pattern below:
 </tab-group>
 ```
 
-The first `tab-title` will be linked to `tab-content`, the second title with the second content, and so on. If you add / remove titles and contents dynamically using JS you need to ensure you maintain the desired order.
+The first `tab-title` will be linked to the first `tab-content`, the second title with the second content, and so on. If you add / remove titles and contents programmatically you will need to ensure that you maintain the desired order / number of elements.
 
 Let's see the elements one by one.
 
