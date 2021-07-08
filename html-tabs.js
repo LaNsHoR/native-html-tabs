@@ -248,6 +248,39 @@ class TabGroup extends HTMLElement {
 
         titles[last_active_index || 0]?.click()
     }
+
+    getTabTitleList( create_if_not_present = false ) {
+        let tab_title_list = this.querySelector('tab-title-list')
+        if( ! tab_title_list && create_if_not_present )
+            this.appendChild( tab_title_list = document.createElement('tab-title-list') )
+        return tab_title_list
+    }
+
+    getTabContentList( create_if_not_present = false ) {
+        let tab_content_list = this.querySelector('tab-content-list')
+        if( ! tab_content_list && create_if_not_present )
+            this.appendChild( tab_content_list = document.createElement('tab-content-list') )
+        return tab_content_list
+    }
+
+    appendTab( title, content ) {
+        const tab_title_list = this.getTabTitleList( true )
+        const tab_content_list = this.getTabContentList( true )
+        
+        let tab_title = typeof title == 'string' ? document.createElement('tab-title') : title
+        let tab_content = typeof content == 'string' ? document.createElement('tab-content') : content
+
+        if( typeof title === 'string' )
+            tab_title.innerHTML = title
+
+        if( typeof content === 'string' )
+            tab_content.innerHTML = content
+
+        tab_title_list.appendChild( tab_title )
+        tab_content_list.appendChild( tab_content )
+
+        return [ tab_title, tab_content ]
+    }
 }
 
 customElements.define('tab-title', TabTitle)

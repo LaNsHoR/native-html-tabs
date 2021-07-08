@@ -138,5 +138,17 @@
                 <tab-title active>Hello 4</tab-title>
             </tab-title-list>
         </tab-group>
+
+        <tab-group id="programmatically"></tab-group>
+
+        <button onclick="add_tab_programmatically()">Add Random Tab</button>
+
+        <script>
+            const add_tab_programmatically = () => {
+                const group = document.getElementById('programmatically')
+                const number = Math.round(Math.random()*100)
+                group.addTab(`Tab <b>${number}</b>`, `Content <h2>${number}</h2>`)
+            }
+        </script>
     </body>
 </html>

@@ -1,8 +1,8 @@
 # html-tabs
 
-A tab component for plain HTML.
+A tab component solution for plain HTML.
 
-NO libraries, frameworks or transpilers required. You don't even need JS to use it. It works in vanilla HTML and this doesn't have any dependencies. You can use it for your native project. 
+NO libraries, frameworks or transpilers required. You don't even need JS to use it. It works in vanilla HTML and this doesn't have any dependencies. You can use it for your native project happily and customize it easily.
 
 Just type:
 
@@ -46,7 +46,7 @@ First, add the package to your project.
 npm install native-html-tabs --save
 ```
 
-Second and last, add the package to the files for which you will use it :)
+Second and last, add the package to the files for which you will use it 🎉
 
 ```javascript
 require('native-html-tabs')
@@ -79,14 +79,15 @@ The first `tab-title` will be linked to the first `tab-content`, the second titl
 
 Let's see the elements one by one.
 
-### \<tab-group\>
+### `<tab-group>`
 
 Defines a group of tabs which share the same content space, so only one of them is rendered at a time.
 
 It can be styled as any other component and accept the standard HTML element attributes.
 
 #### Special Attributes:
-- tabs-position: accept the values `top`, `bottom`, `left`, `right`. The default is `top`. As any attribute, it's safe to change it programmatically at any time.
+
+- `tabs-position`: accept the values `top`, `bottom`, `left`, `right`. The default is `top`. As any attribute, it's safe to change it programmatically at any time.
 
 #### Examples
 
@@ -107,22 +108,23 @@ It can be styled as any other component and accept the standard HTML element att
 ```
 [![tabs5.png](https://i.postimg.cc/XvqS6T88/tabs5.png)](https://postimg.cc/v4JSW2Cg)
 
-
-### \<tab-title-list\>
+### `<tab-title-list>`
 
 Defines a container for the tab titles. We can define only one per tab-group.
 
 It can be styled as any other component and accept the standard HTML element attributes.
 
-### \<tab-title\>
+### `<tab-title>`
 
 Defines a tab title. It can include any children set, it's not restricted to text.
 
 It can be styled as any other component and accept the standard HTML element attributes.
 
 #### Special Attributes:
-- active: defines if the tab is active and selected, this attribute is set automatically when the user clicks on the tab title. Only one tab-title can be active at a time for a given tab-group.
-- disabled: makes the tab-title disabled, preventing the user to click on it.
+
+- `active`: defines if the tab is active and selected, this attribute is set automatically when the user clicks on the tab title. Only one tab-title can be active at a time for a given tab-group.
+
+- `disabled`: makes the tab-title disabled, preventing the user to click on it.
 
 You have several options to set a tab as an active programmatically, the common ones are:
 
@@ -189,20 +191,21 @@ Using random html as title:
 ```
 [![tabs7.png](https://i.postimg.cc/x85h727n/tabs7.png)](https://postimg.cc/dZ75kzwx)
 
-### \<tab-content-list\>
+### `<tab-content-list>`
 
 Defines a container for the tab contents. We can define only one per tab-group.
 
 It can be styled as any other component and accept the standard HTML element attributes.
 
-### \<tab-content\>
+### `<tab-content>`
 
 Defines a tab content.
 
 It can be styled as any other component and accept the standard HTML element attributes.
 
 #### Special Attributes:
-- active: defines if the tab content is active (rendered), this attribute is set automatically when the user clicks on the tab title associated to this content. Only one tab-content can be active at a time for a given tab-group.
+
+- `active`: defines if the tab content is active (rendered), this attribute is set automatically when the user clicks on the tab title associated to this content. Only one tab-content can be active at a time for a given tab-group.
 
 You have several options to set a tab content as an active programmatically, the common ones are:
 
@@ -291,3 +294,16 @@ tab-title[disabled] {
 ```
 
 [![tabs9.png](https://i.postimg.cc/4dRszXV3/tabs9.png)](https://postimg.cc/KKf6bS9X)
+
+#### API:
+The `tab-group` element provides a few methods as API to make your life easier. You don't really need to use any of these, with the  standard HTML element manipulation ( `document.createElement`, `element.appendChild`, etc) you can add / remove tabs or make them disabled / active ( `element.setAttribute` ) as has been described above. The methods below are offered just as syntactic sugar.
+
+- `appendTab( tab, content )`: Creates a new tab into the tab group. Tab can be either, a `string` or a `tab-title` element. Content can be either, a `string` or a `tab-content` element.
+
+- `getTabTitleList( create_if_not_present = false)`: Returns the `tab-title-list` element of the current `tab-group`, so you can add, remove and manipulate tab-title elements easily. An optional boolean parameter (false by default) is accepted to create a `tab-title-list` child if we don't have any.
+
+- `getTabContentList( create_if_not_present = false)`: Returns the `tab-content-list` element of the current `tab-group`, so you can add, remove and manipulate tab-content elements easily. An optional boolean parameter (false by default) is accepted to create a `tab-content-list` child if we don't have any.
+
+- `setActive( index )`: Set the tab with index `index` as active. The valid index range is from 0 to NumberOfTabs-1.
+
+- `setPosition( position )`: Changes the tab titles position. Valid positions are: `top` (default), `bottom`, `left`, `right`.

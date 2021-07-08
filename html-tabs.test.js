@@ -437,3 +437,111 @@ test('set position simulating attributeChangedCallback behaviour', () => {
     expect(tab_group.getAttribute('tabs-position')).toBe('left')
     expect(tab_title_list[0].getAttribute('tabs-position')).toBe('left')
 })
+
+test('appendTab method works with strings', () => {
+    document.body.innerHTML = ''
+
+    const tab_group = document.createElement('tab-group')
+    document.body.appendChild(tab_group)
+
+    const titles = [ 'tab 1', 'second tab', 'this works', '<b>Bold</b>' ]
+    const contents = [ 'content 1', 'second content', 'awesome!', '<h2>HTML Works</h2>' ]
+
+    titles.forEach( (title, index) => {
+        tab_group.appendTab( title, contents[index] )
+    })
+
+    expect(tab_group.childNodes.length).toBe(2)
+    expect(tab_group.childNodes[0].childNodes.length).toBe(titles.length)
+    expect(tab_group.childNodes[1].childNodes.length).toBe(contents.length)
+
+    const title_list = tab_group.querySelector('tab-title-list')
+    titles.forEach( (title, index) => {
+        expect( title_list.childNodes[index].innerHTML ).toBe(title)
+        expect( title_list.childNodes[index].tagName ).toBe('TAB-TITLE')
+    })
+
+    const content_list = tab_group.querySelector('tab-content-list')
+    contents.forEach( (content, index) => {
+        expect( content_list.childNodes[index].innerHTML ).toBe(content)
+        expect( content_list.childNodes[index].tagName ).toBe('TAB-CONTENT')
+    })
+})
+
+test('appendTab method works with elements', () => {
+    document.body.innerHTML = ''
+
+    const tab_group = document.createElement('tab-group')
+    document.body.appendChild(tab_group)
+
+    const titles = [ 'tab 1', 'second tab', 'this works', '<b>Bold</b>' ]
+    const contents = [ 'content 1', 'second content', 'awesome!', '<h2>HTML Works</h2>' ]
+
+    titles.forEach( (title, index) => {
+        const tab_title = document.createElement('tab-title')
+        tab_title.innerHTML = title
+        const tab_content = document.createElement('tab-content')
+        tab_content.innerHTML = contents[index]
+        tab_group.appendTab( tab_title, tab_content )
+    })
+
+    expect(tab_group.childNodes.length).toBe(2)
+    expect(tab_group.childNodes[0].childNodes.length).toBe(titles.length)
+    expect(tab_group.childNodes[1].childNodes.length).toBe(contents.length)
+
+    const title_list = tab_group.querySelector('tab-title-list')
+    titles.forEach( (title, index) => {
+        expect( title_list.childNodes[index].innerHTML ).toBe(title)
+        expect( title_list.childNodes[index].tagName ).toBe('TAB-TITLE')
+    })
+
+    const content_list = tab_group.querySelector('tab-content-list')
+    contents.forEach( (content, index) => {
+        expect( content_list.childNodes[index].innerHTML ).toBe(content)
+        expect( content_list.childNodes[index].tagName ).toBe('TAB-CONTENT')
+    })
+})
+
+test('getTabTitletList empty', () => {
+    document.body.innerHTML = ''
+
+    const tab_group = document.createElement('tab-group')
+    document.body.appendChild(tab_group)
+
+    const title_list = tab_group.getTabTitleList()
+    expect(tab_group.childNodes.length).toBe(0)
+    expect(title_list).toBeNull()
+})
+
+test('getTabTitleList empty with create', () => {
+    document.body.innerHTML = ''
+
+    const tab_group = document.createElement('tab-group')
+    document.body.appendChild(tab_group)
+
+    const title_list = tab_group.getTabTitleList( true )
+    expect(tab_group.childNodes.length).toBe(1)
+    expect(title_list.tagName).toBe('TAB-TITLE-LIST')
+})
+
+test('getTabContentList empty', () => {
+    document.body.innerHTML = ''
+
+    const tab_group = document.createElement('tab-group')
+    document.body.appendChild(tab_group)
+
+    const content_list = tab_group.getTabContentList()
+    expect(tab_group.childNodes.length).toBe(0)
+    expect(content_list).toBeNull()
+})
+
+test('getTabContentList empty with create', () => {
+    document.body.innerHTML = ''
+
+    const tab_group = document.createElement('tab-group')
+    document.body.appendChild(tab_group)
+
+    const content_list = tab_group.getTabContentList( true )
+    expect(tab_group.childNodes.length).toBe(1)
+    expect(content_list.tagName).toBe('TAB-CONTENT-LIST')
+})
