@@ -295,7 +295,7 @@ tab-title[disabled] {
 
 [![tabs9.png](https://i.postimg.cc/4dRszXV3/tabs9.png)](https://postimg.cc/KKf6bS9X)
 
-#### API:
+## API:
 The `tab-group` element provides a few methods as API to make your life easier. You don't really need to use any of these, with the  standard HTML element manipulation ( `document.createElement`, `element.appendChild`, etc) you can add / remove tabs or make them disabled / active ( `element.setAttribute` ) as has been described above. The methods below are offered just as syntactic sugar.
 
 - `appendTab( tab, content )`: Creates a new tab into the tab group. Tab can be either, a `string` or a `tab-title` element. Content can be either, a `string` or a `tab-content` element.
