@@ -315,6 +315,22 @@ test('setActive sets the default with no parameters', () => {
     expect(tab_content[3].getAttribute('active')).toBeNull()
 })
 
+test('adding a child with active attribute which is not a title-tab', () => {
+    document.body.innerHTML = example_4
+
+    const tab_title = document.getElementsByTagName('tab-title')
+    const tab_content = document.getElementsByTagName('tab-content')
+    const tab_group = document.getElementsByTagName('tab-group')[0]
+    const div = document.createElement('div')
+
+    div.setAttribute('active', '')
+
+    // seems like mutation observer events are not properly implemented in jsdom, so we need to call update manually
+    tab_group.update()
+
+    tab_group.update([{type:'attributes', attributeName:'active', target:div}])
+})
+
 test('disabled attribute', () => {
     document.body.innerHTML = example_1
 

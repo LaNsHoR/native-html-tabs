@@ -56,10 +56,13 @@ class TabTitleList extends HTMLElement {
                     padding: 2px 13px;
                     border: 1px solid black;
                     background: #bfe5ff;
+                    display: flex;
+                    align-items: center;
                 }
                 ::slotted(tab-title[active]) {
                     background: #ffffff;
                     z-index: 1;
+                    cursor:default;
                 }
                 ::slotted(tab-title[disabled]) {
                     background: #828282;
@@ -216,7 +219,7 @@ class TabGroup extends HTMLElement {
         mutations.forEach( mutation => {
             if( mutation.type != 'attributes' || mutation.attributeName != 'active' || mutation.target.getAttribute('active') === null )
                 return
-            last_new_active = mutation.target.position()
+            last_new_active = mutation.target?.position?.()
             }
         )
 
