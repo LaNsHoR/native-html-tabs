@@ -137,7 +137,6 @@ class TabContentList extends HTMLElement {
         template.innerHTML = `
             <style>
                 ::slotted(tab-content) {
-                    display:none;
                     padding: 10px;
                     background: #ffffff;
                     flex-grow: 1
@@ -145,6 +144,10 @@ class TabContentList extends HTMLElement {
 
                 ::slotted(tab-content[active]) {
                     display: block
+                }
+
+                ::slotted(:not(tab-content[active])) {
+                    display: none !important
                 }
             </style>
             <slot name='content'></slot>
