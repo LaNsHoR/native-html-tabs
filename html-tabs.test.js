@@ -81,11 +81,11 @@ const example_6 = `
     <tab-title-list>
         <tab-title>Hello 1</tab-title>
         <tab-title>Hello 2</tab-title>
-        <tab-title>Hello 3</tab-title>
+        <tab-title active>THIS</tab-title>
         <tab-title disabled>Hello 4</tab-title>
     </tab-title-list>
     <tab-content-list>
-        <tab-content>World 1</tab-content>
+        <tab-content>${example_5}</tab-content>
         <tab-content>World 2</tab-content>
         <tab-content>World 3</tab-content>
         <tab-content>World 4</tab-content>
@@ -281,7 +281,7 @@ test('change active using setActive', () => {
 
     // seems like mutation observer events are not properly implemented in jsdom, so we need to call update manually
     tab_group.update()
-    
+
     tab_group.setActive(2)
 
     expect(tab_title[0].getAttribute('active')).toBeNull()
@@ -560,4 +560,24 @@ test('getTabContentList empty with create', () => {
     const content_list = tab_group.getTabContentList( true )
     expect(tab_group.childNodes.length).toBe(1)
     expect(content_list.tagName).toBe('TAB-CONTENT-LIST')
+})
+
+// skip this test as querySelectorAll is not working properly with :scope > *, :scope > * ...
+test.skip('nested tab-groups work', () => {
+    document.body.innerHTML = example_6
+
+    const tab_title = document.getElementsByTagName('tab-title')
+    const tab_groups = Array.from(document.getElementsByTagName('tab-group'))
+
+    // seems like mutation observer events are not properly implemented in jsdom, so we need to call update manually
+    tab_groups.forEach( group => group.update() )
+
+    expect(tab_title[0].hasAttribute('active')).toBe(false)
+    expect(tab_title[1].hasAttribute('active')).toBe(false)
+    expect(tab_title[2].hasAttribute('active')).toBe(true)
+    expect(tab_title[3].hasAttribute('active')).toBe(false)
+    expect(tab_title[4].hasAttribute('active')).toBe(true)
+    expect(tab_title[5].hasAttribute('active')).toBe(false)
+    expect(tab_title[6].hasAttribute('active')).toBe(false)
+    expect(tab_title[7].hasAttribute('active')).toBe(false)
 })

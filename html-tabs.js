@@ -14,12 +14,12 @@ class TabTitle extends HTMLElement {
             return
 
         const position = this.position()
-        const contents = this.parentElement?.parentElement?.querySelector('tab-content-list')?.children
+        const contents = this.parentElement?.parentElement?.querySelector(':scope > tab-content-list')?.children
         const tabs     = this.parentElement?.children
 
         if( ! contents || ! tabs )
             return
-        
+
         // remove old active attributes and set the new ones: it's important to do this in a way that generates the minimum set of mutations for a mutation observer
         Array.from(contents).forEach( (tab, index) => index != position && tab.removeAttribute('active'))
         Array.from(tabs).forEach( (tab, index) => index != position && tab.removeAttribute('active'))
@@ -47,7 +47,7 @@ class TabContent extends HTMLElement {
 class TabTitleList extends HTMLElement {
     constructor() {
         super()
-        
+
         const template = document.createElement('template')
         template.innerHTML = `
             <style>
@@ -81,7 +81,7 @@ class TabTitleList extends HTMLElement {
                 ::slotted(tab-title[position="top"][active]) {
                     margin-bottom: -1px;
                 }
-                
+
                 ::slotted(tab-title[position="bottom"]) {
                     margin-left: 5px;
                     border-top: 0;
@@ -93,7 +93,7 @@ class TabTitleList extends HTMLElement {
                 ::slotted(tab-title[position="bottom"][active]) {
                     margin-top: -1px;
                 }
-                
+
                 ::slotted(tab-title[position="left"]) {
                     margin-top: 5px;
                     border-right: 0;
@@ -105,7 +105,7 @@ class TabTitleList extends HTMLElement {
                 ::slotted(tab-title[position="left"][active]) {
                     margin-right: -1px;
                 }
-                
+
                 ::slotted(tab-title[position="right"]) {
                     margin-top: 5px;
                     border-left: 0;
@@ -117,7 +117,7 @@ class TabTitleList extends HTMLElement {
                 ::slotted(tab-title[position="right"][active]) {
                     margin-left: -1px;
                 }
-                
+
             </style>
             <slot name='title'></slot>
         `
@@ -125,7 +125,7 @@ class TabTitleList extends HTMLElement {
         this.attachShadow({ mode: 'open' })
         this.shadowRoot.appendChild( template.content.cloneNode(true) )
     }
-    
+
     connectedCallback() { this.setAttribute('slot', 'title-list') }
 }
 
@@ -220,6 +220,8 @@ class TabGroup extends HTMLElement {
 
         let last_new_active = null
         mutations.forEach( mutation => {
+            if( mutation.target.parentElement?.parentElement != this )
+                return
             if( mutation.type != 'attributes' || mutation.attributeName != 'active' || mutation.target.getAttribute('active') === null )
                 return
             last_new_active = mutation.target?.position?.()
@@ -233,37 +235,37 @@ class TabGroup extends HTMLElement {
         const current_position = this.getAttribute('tabs-position')
         position = position || current_position
         position = ['top', 'bottom', 'left', 'right'].indexOf(position) === -1 ? 'top' : position
-        for( const title of this.querySelectorAll('tab-title') ) {
+        for( const title of this.querySelectorAll(':scope > tab-title-list > tab-title') ) {
             title.setAttribute('position', position)
         }
 
-        this.querySelector('tab-title-list')?.setAttribute('tabs-position', position)
+        this.querySelector(':scope > tab-title-list')?.setAttribute('tabs-position', position)
 
         if( current_position != position )
             this.setAttribute('tabs-position', position)
     }
 
     setActive( index = null) {
-        const titles = this.querySelectorAll('tab-title')
-        
+        const titles = this.querySelectorAll(':scope > tab-title-list > tab-title')
+
         if( index !== null )
             return titles[index]?.click()
 
         const last_node = list => list[list.length - 1]
-        const last_active_index = last_node.call(null, this.querySelectorAll('tab-title[active], tab-content[active]'))?.position()
+        const last_active_index = last_node.call(null, this.querySelectorAll(':scope > tab-title-list > tab-title[active], :scope > tab-content-list > tab-content[active]'))?.position()
 
         titles[last_active_index || 0]?.click()
     }
 
     getTabTitleList( create_if_not_present = false ) {
-        let tab_title_list = this.querySelector('tab-title-list')
+        let tab_title_list = this.querySelector(':scope > tab-title-list')
         if( ! tab_title_list && create_if_not_present )
             this.appendChild( tab_title_list = document.createElement('tab-title-list') )
         return tab_title_list
     }
 
     getTabContentList( create_if_not_present = false ) {
-        let tab_content_list = this.querySelector('tab-content-list')
+        let tab_content_list = this.querySelector(':scope > tab-content-list')
         if( ! tab_content_list && create_if_not_present )
             this.appendChild( tab_content_list = document.createElement('tab-content-list') )
         return tab_content_list
@@ -272,7 +274,7 @@ class TabGroup extends HTMLElement {
     appendTab( title, content ) {
         const tab_title_list = this.getTabTitleList( true )
         const tab_content_list = this.getTabContentList( true )
-        
+
         let tab_title = typeof title == 'string' ? document.createElement('tab-title') : title
         let tab_content = typeof content == 'string' ? document.createElement('tab-content') : content
 

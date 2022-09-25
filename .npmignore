@@ -1,0 +1,7 @@
+coverage/
+node_modules/
+tests/
+.gitignore
+html-tabs.test.js
+readme.md
+webpack.config.js
