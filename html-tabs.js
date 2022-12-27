@@ -10,21 +10,38 @@ class TabTitle extends HTMLElement {
     }
 
     click() {
-        if( this.getAttribute('disabled') !== null )
+        if( this.hasAttribute('disabled') )
             return
 
         const position = this.position()
         const contents = this.parentElement?.parentElement?.querySelector(':scope > tab-content-list')?.children
         const tabs     = this.parentElement?.children
+        const eventOptions = { bubbles: true, composed: true, cancelable: true }
 
         if( ! contents || ! tabs )
             return
 
         // remove old active attributes and set the new ones: it's important to do this in a way that generates the minimum set of mutations for a mutation observer
-        Array.from(contents).forEach( (tab, index) => index != position && tab.removeAttribute('active'))
-        Array.from(tabs).forEach( (tab, index) => index != position && tab.removeAttribute('active'))
-        contents[position]?.getAttribute('active') !== '' && contents[position]?.setAttribute('active', '')
-        this.getAttribute('active') !== '' && this.setAttribute('active', '')
+        Array.from(contents).forEach( (content, index) => {
+            if( index == position || ! content.hasAttribute('active') )
+                return
+            content.removeAttribute('active')
+            content.dispatchEvent( new CustomEvent('activechange', eventOptions ))
+        })
+        Array.from(tabs).forEach( (tab, index) => {
+            if( index == position || ! tab.hasAttribute('active') )
+                return
+            tab.removeAttribute('active')
+            tab.dispatchEvent( new CustomEvent('activechange', eventOptions ))
+        })
+        if( ! contents[position]?.hasAttribute('active') ) {
+            contents[position]?.setAttribute('active', '')
+            contents[position]?.dispatchEvent( new CustomEvent('activechange', eventOptions ))
+        }
+        if( ! this.hasAttribute('active') ) {
+            this.setAttribute('active', '')
+            this.dispatchEvent( new CustomEvent('activechange', eventOptions ) )
+        }
     }
 
     position() {
@@ -222,7 +239,7 @@ class TabGroup extends HTMLElement {
         mutations.forEach( mutation => {
             if( mutation.target.parentElement?.parentElement != this )
                 return
-            if( mutation.type != 'attributes' || mutation.attributeName != 'active' || mutation.target.getAttribute('active') === null )
+            if( mutation.type != 'attributes' || mutation.attributeName != 'active' || ! mutation.target.hasAttribute('active') )
                 return
             last_new_active = mutation.target?.position?.()
             }

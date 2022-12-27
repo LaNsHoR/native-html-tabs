@@ -149,12 +149,14 @@
                 <tab-title>Hello 2</tab-title>
                 <tab-title>Hello 3</tab-title>
                 <tab-title disabled>Hello 4</tab-title>
+                <tab-title id="event-title">Active Message</tab-title>
             </tab-title-list>
             <tab-content-list>
                 <tab-content>World 1</tab-content>
                 <tab-content>World 2</tab-content>
                 <tab-content>World 3</tab-content>
                 <tab-content>World 4</tab-content>
+                <tab-content id="event-content"></tab-content>
             </tab-content-list>
         </tab-group>
 
@@ -168,6 +170,22 @@
                 const number = Math.round(Math.random()*100)
                 group.appendTab(`Tab <b>${number}</b>`, `Content <h2>${number}</h2>`)
             }
+
+            document.getElementById('event-title').addEventListener('activechange', event => {
+                if( event.target.hasAttribute('active') )
+                    alert('ACTIVE !!')
+                else
+                    alert('NO ACTIVE :(')
+            })
+
+            let counter = 0
+
+            document.getElementById('event-content').addEventListener('activechange', event => {
+                if( ! event.target.hasAttribute('active') )
+                    return
+                counter++
+                event.target.innerHTML = `I've been active ${counter} times.`
+            })
         </script>
     </body>
 </html>

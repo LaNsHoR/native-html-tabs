@@ -307,3 +307,18 @@ The `tab-group` element provides a few methods as API to make your life easier. 
 - `setActive( index )`: Set the tab with index `index` as active. The valid index range is from 0 to NumberOfTabs-1.
 
 - `setPosition( position )`: Changes the tab titles position. Valid positions are: `top` (default), `bottom`, `left`, `right`.
+
+## Custom Events
+
+`tab-title` and `tab-content` elements will throw a custom event every time their active attribute changes. The name of this event is `activechange`. An example of how to use it:
+
+```javascript
+const tab_content = document.getElementById('my-tab-content-id')
+/* when the tab-content element is hidden, we remove the children nodes to DOM memory and gain performance (useful for long set of tabs with complex data), when the tab-content element is active, we introduce the content again */
+tab_content.addEventListener('activechange', event => {
+    if( tab_content.hasAttribute('active') )
+        tab_content.innerHTML = render_content()
+    else
+        tab_content.innerHTML = ''
+})
+```
