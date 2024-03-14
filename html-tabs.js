@@ -7,6 +7,9 @@ class TabTitle extends HTMLElement {
 
     connectedCallback() {
         this.setAttribute('slot', 'title')
+        this.setAttribute('role', 'tab')
+        this.hasAttribute('active') && this.setAttribute('aria-selected', 'true');
+        this.hasAttribute('disabled') && this.setAttribute('aria-disabled', 'true')
     }
 
     click() {
@@ -31,7 +34,8 @@ class TabTitle extends HTMLElement {
         Array.from(tabs).forEach( (tab, index) => {
             if( index == position || ! tab.hasAttribute('active') )
                 return
-            tab.removeAttribute('active')
+            tab.removeAttribute('active');
+            tab.removeAttribute('aria-selected', 'true');
             tab.dispatchEvent( new CustomEvent('activechange', eventOptions ))
         })
         if( ! contents[position]?.hasAttribute('active') ) {
@@ -40,6 +44,7 @@ class TabTitle extends HTMLElement {
         }
         if( ! this.hasAttribute('active') ) {
             this.setAttribute('active', '')
+            this.setAttribute('aria-selected', 'true');
             this.dispatchEvent( new CustomEvent('activechange', eventOptions ) )
         }
     }
@@ -54,6 +59,7 @@ class TabContent extends HTMLElement {
 
     connectedCallback() {
         this.setAttribute('slot', 'content')
+        this.setAttribute('role', 'tabpanel');
     }
 
     position() {
@@ -143,7 +149,10 @@ class TabTitleList extends HTMLElement {
         this.shadowRoot.appendChild( template.content.cloneNode(true) )
     }
 
-    connectedCallback() { this.setAttribute('slot', 'title-list') }
+    connectedCallback() {
+        this.setAttribute('slot', 'title-list')
+        this.setAttribute('role', 'tablist');
+    }
 }
 
 class TabContentList extends HTMLElement {
@@ -222,7 +231,7 @@ class TabGroup extends HTMLElement {
         this.shadowRoot.appendChild( template.content.cloneNode(true) )
 
         const observer = new MutationObserver( mutations => this.update(mutations) )
-        observer.observe(this, { childList:true, subtree: true, attributes:true, attributeFilter: ['active'] })
+        observer.observe(this, { childList:true, subtree: true, attributes:true, attributeFilter: ['active', 'disabled'] })
 
         this.current_active_tab = null
     }
@@ -237,10 +246,16 @@ class TabGroup extends HTMLElement {
 
         let last_new_active = null
         mutations.forEach( mutation => {
-            if( mutation.target.parentElement?.parentElement != this )
+            if( mutation.target.parentElement?.parentElement != this ) {
                 return
-            if( mutation.type != 'attributes' || mutation.attributeName != 'active' || ! mutation.target.hasAttribute('active') )
+                }
+            if( mutation.type == 'attributes' && mutation.attributeName == 'disabled') {
+                mutation.target.hasAttribute('disabled') ? mutation.target.setAttribute('aria-disabled', 'true') : mutation.target.removeAttribute('aria-disabled')
                 return
+                }
+            if( mutation.type != 'attributes' || mutation.attributeName != 'active' || ! mutation.target.hasAttribute('active') ) {
+                return
+                }
             last_new_active = mutation.target?.position?.()
             }
         )
