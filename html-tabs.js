@@ -8,8 +8,8 @@ class TabTitle extends HTMLElement {
     connectedCallback() {
         this.setAttribute('slot', 'title')
         this.setAttribute('role', 'tab')
-        this.hasAttribute('active') && this.setAttribute('aria-selected', 'true');
-        this.hasAttribute('disabled') && this.setAttribute('aria-disabled', 'true')
+        this.setAttribute('aria-selected', this.hasAttribute('active') )
+        this.setAttribute('aria-disabled', this.hasAttribute('disabled') )
     }
 
     click() {
@@ -35,7 +35,7 @@ class TabTitle extends HTMLElement {
             if( index == position || ! tab.hasAttribute('active') )
                 return
             tab.removeAttribute('active');
-            tab.removeAttribute('aria-selected', 'true');
+            tab.setAttribute('aria-selected', 'false')
             tab.dispatchEvent( new CustomEvent('activechange', eventOptions ))
         })
         if( ! contents[position]?.hasAttribute('active') ) {
@@ -246,16 +246,12 @@ class TabGroup extends HTMLElement {
 
         let last_new_active = null
         mutations.forEach( mutation => {
-            if( mutation.target.parentElement?.parentElement != this ) {
+            if( mutation.target.parentElement?.parentElement != this )
                 return
-                }
-            if( mutation.type == 'attributes' && mutation.attributeName == 'disabled') {
-                mutation.target.hasAttribute('disabled') ? mutation.target.setAttribute('aria-disabled', 'true') : mutation.target.removeAttribute('aria-disabled')
+            if( mutation.type == 'attributes' && mutation.attributeName == 'disabled' && mutation.target.getAttribute('role') == 'tab' )
+                return mutation.target.setAttribute('aria-disabled', mutation.target.hasAttribute('disabled') )
+            if( mutation.type != 'attributes' || mutation.attributeName != 'active' || ! mutation.target.hasAttribute('active') )
                 return
-                }
-            if( mutation.type != 'attributes' || mutation.attributeName != 'active' || ! mutation.target.hasAttribute('active') ) {
-                return
-                }
             last_new_active = mutation.target?.position?.()
             }
         )
